@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>grocery calculator</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="heading">Eelcome to abbas's store</div>
+    <div class="grid-container">
+      <div class="grid"> 
+<button id="potatoes" class='item' onclick="potatoes()">Potatoes</button> 
+<button id="cabbage" class='item' onclick="cabbages()">Cabbage</button> 
+<button class='item' onclick="parsnips()">Oarsnips</button> 
+<button class='item' onclick="tomatoes()">Tomatoe</button> 
+<button class='item' onclick="okras()">Okra</button> 
+<button class='item'>Cucumber</button> 
+<button class='item'>Onions</button> 
+<button class='item'>Carrots</button> 
+</div>
+    </div>
+    <div class="cart-container">
+      <div class="cart">
+        <h3>Bill</h3>
+        <div class="grid2">
+          <table class="table">
+            <tr>
+              <th>Item</th>
+              <th>Qty</th>
+              <th>Price</th>
+            </tr>
+            <tr>
+              <td id="test" class="itemname"></td>
+              <td id="test2" class="qty"></td>
+              <td id="test3" class="price"></td>
+            </tr>
+            <td>
+              <hr>Total
+              <hr>
+            </td>
+            <td id="totalQty"> </td>
+            <td id="totalAmount"> </td>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
