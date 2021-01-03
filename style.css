@@ -73,8 +73,14 @@ button {
     text-align: left;
     margin: auto;
   }
-
-  /* tr { background-color: palegoldenrod;}
+/* 
+  tr { background-color: palegoldenrod;}
   td {
-    background-color: purple;
+    background-color: rgb(114, 142, 241);
   } */
+  tr {
+    width: 300px;
+  }
+  td {
+    width: 50px;
+  }
