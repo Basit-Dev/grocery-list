@@ -1,133 +1,144 @@
-function Items(name, qty, price) {
+function Items(name, qty, price, arr) {
   this.name = name;
   this.qty = qty;
   this.price = price;
+  this.arr = arr;
 }
 
-var potatoe = new Items('Potatoe', 1, 3.99);
-var cabbage = new Items('Cabbage', 1, 1.19);
-var parsnip = new Items('Parsnip', 1, 0.89);
-var tomatoe = new Items('Tomatoe', 1, 1.49);
-var okra = new Items('Okra', 1, "2.20");
+var potatoe = new Items("Potatoe", 1, 2.99, []);
+var cabbage = new Items("Cabbage", 1, 1.19, []);
+var parsnip = new Items("Parsnip", 1, 0.89, []);
+var tomatoe = new Items("Tomatoe", 1, 1.49, []);
+var okra = new Items("Okra", 1, "2.20", []);
+var cucumber = new Items("Cucumber", 1, 0.99, []);
+var onion = new Items("Onion", 1, 1.59, []);
+var carrot = new Items("Carrot", 1, "1.00", []);
 
-var x = [];
-var y = [];
+var totalPriceCheck = [];
+var totalQtyCheck = [];
+var duplicateItemNameCheck = [];
+var qtyIncrement ;
 
-
+//  Bill total function
 function billCalc() {
-  return x.reduce((a, b) => a + b, 0);
+  var total = totalPriceCheck.reduce((a, b) => a + b, 0);
+  document.getElementById("totalAmount").innerHTML =
+    "£" + total.toFixed(2);
 }
-
+// Bill quantity total function
 function qtyCalc() {
-  return y.reduce((a, b) => a + b, 0);
+  var total = totalQtyCheck.reduce((a, b) => a + b, 0);
+  return document.getElementById("totalQty").innerHTML = total;
 }
 
-function addItems(itemName, qty, price) {
-
-if(itemName) {
-
-var qtyConvert = Number(qty) * 1;
-  //node1.appendChild(textnode1);
-  document.getElementById("test2").innerHTML = qty*1;
-  y.push(qtyConvert);
-
-
-document.getElementById("test2").innerHTML = "1";
-}
-
-   // if itemname is true then jydt change inner html
+function addItems(itemName, qty, price, arr) {
   var node = document.createElement("TR");
   var textnode = document.createTextNode(itemName);
+  duplicateItemNameCheck.push(textnode);
   node.appendChild(textnode);
-  document.getElementById("test").appendChild(node);
+  document
+    .getElementById("itemName")
+    .appendChild(node)
+    .setAttribute("class", itemName);
+  console.log(duplicateItemNameCheck);
 
   var node1 = document.createElement("TR");
   var textnode1 = document.createTextNode(qty);
   qtyConvert = Number(qty);
   node1.appendChild(textnode1);
-  document.getElementById("test2").appendChild(node1);
-  y.push(qtyConvert);
+  document
+    .getElementById("qty")
+    .appendChild(node1)
+    .setAttribute("class", itemName);
+  totalQtyCheck.push(qtyConvert);
+  arr.push(qtyConvert);
+  qtyCalc();
 
   var node2 = document.createElement("TR");
   var textnode2 = document.createTextNode("£" + price);
   var numConvert = Number(price);
   node2.appendChild(textnode2);
-  document.getElementById("test3").appendChild(node2);
-  x.push(numConvert);
-  totalAmounts();
-
-   //return itemName, qty, price;
+  document
+    .getElementById("price")
+    .appendChild(node2)
+    .setAttribute("class", itemName);
+  totalPriceCheck.push(numConvert);
+  billCalc();
+  console.log(totalPriceCheck);
 }
-
-function totalAmounts() {
-  document.getElementById("totalAmount").innerHTML = "£" + billCalc().toFixed(2);
-  document.getElementById("totalQty").innerHTML = qtyCalc();
+function multiplier(objName, className) {
+    qtyIncrement = objName.arr.push(1);
+    totalQtyCheck.push(1);
+    totalPriceCheck.push(objName.price);
+  var getQtyClass = document.getElementById("qty");
+    getQtyClass.querySelector(className).innerHTML = qtyIncrement;
+  var getPriceClass = document.getElementById("price");
+  var multiplierPrice = qtyIncrement * objName.price;
+    getPriceClass.querySelector(className).innerHTML = "£" + multiplierPrice.toFixed(2);
+    qtyCalc();
+    billCalc();
 }
 
 function potatoes() {
-addItems(potatoe.name, potatoe.qty, potatoe.price)
+  if (potatoe.arr.length > 0) {
+    multiplier(potatoe,".Potatoe");
+  } else {
+    addItems(potatoe.name, potatoe.qty, potatoe.price, potatoe.arr);
+  } 
 }
 
 function cabbages() {
-addItems(cabbage.name, cabbage.qty, cabbage.price)
+  if (cabbage.arr.length > 0) {
+    multiplier(cabbage,".Cabbage");
+  } else {
+    addItems(cabbage.name, cabbage.qty, cabbage.price, cabbage.arr);
+  }
 }
 
 function parsnips() {
-addItems(parsnip.name, parsnip.qty, parsnip.price)
+  if (parsnip.arr.length > 0) {
+    multiplier(parsnip,".Parsnip");
+  } else {
+      addItems(parsnip.name, parsnip.qty, parsnip.price, parsnip.arr);
+    }
 }
 
 function tomatoes() {
-addItems(tomatoe.name, tomatoe.qty, tomatoe.price)
+  if (tomatoe.arr.length > 0) {
+    multiplier(tomatoe,".Tomatoe");
+  } else {
+      addItems(tomatoe.name, tomatoe.qty, tomatoe.price, tomatoe.arr);
+    }
 }
 
 function okras() {
-addItems(okra.name, okra.qty, okra.price)
+  if (okra.arr.length > 0) {
+    multiplier(okra,".Okra");
+  } else {
+      addItems(okra.name, okra.qty, okra.price, okra.arr);
+    }
 }
 
-
-
-/*function potatoes() {
-  var node = document.createElement("TR");
-  var textnode = document.createTextNode(potatoe.name);
-  node.appendChild(textnode);
-  document.getElementById("test").appendChild(node);
-
-  var node1 = document.createElement("TR");
-  var textnode1 = document.createTextNode(potatoe.qty);
-  var qtyConvert = Number(potatoe.qty);
-  node1.appendChild(textnode1);
-  document.getElementById("test2").appendChild(node1);
-  y.push(qtyConvert);
-
-  var node2 = document.createElement("TR");
-  var textnode2 = document.createTextNode("£" + potatoe.price);
-  var numConvert = Number(potatoe.price);
-  node2.appendChild(textnode2);
-  document.getElementById("test3").appendChild(node2);
-  x.push(numConvert);
-  totalAmounts(); 
+function cucumbers() {
+  if (cucumber.arr.length > 0) {
+    multiplier(cucumber,".Cucumber");
+  } else {
+      addItems(cucumber.name, cucumber.qty, cucumber.price, cucumber.arr);
+    }
 }
 
-function cabbages() {
-  var node = document.createElement("TR");
-  var textnode = document.createTextNode(cabbage.name);
-  node.appendChild(textnode);
-  document.getElementById("test").appendChild(node);
+function onions() {
+  if (onion.arr.length > 0) {
+    multiplier(onion,".Onion");
+  } else {
+      addItems(onion.name, onion.qty, onion.price, onion.arr);
+    }
+}
 
-  var node1 = document.createElement("TR");
-  var textnode1 = document.createTextNode(cabbage.qty);
-  var qtyConvert = Number(cabbage.qty);
-  node1.appendChild(textnode1);
-  document.getElementById("test2").appendChild(node1);
-  y.push(qtyConvert);
-
-  var node2 = document.createElement("TR");
-  var textnode2 = document.createTextNode("£" + cabbage.price);
-  var numConvert = Number(cabbage.price);
-  node2.appendChild(textnode2);
-  document.getElementById("test3").appendChild(node2);
-  x.push(numConvert)
-  totalAmounts(); 
-}*/
-
-
+function carrots() {
+  if (carrot.arr.length > 0) {
+    multiplier(carrot,".Carrot");
+  } else {
+      addItems(carrot.name, carrot.qty, carrot.price, carrot.arr);
+    }
+}
