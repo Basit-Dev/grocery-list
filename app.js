@@ -1,3 +1,4 @@
+// Constructor object
 function Items(name, qty, price, arr) {
   this.name = name;
   this.qty = qty;
@@ -5,6 +6,7 @@ function Items(name, qty, price, arr) {
   this.arr = arr;
 }
 
+// Object created
 var potatoe = new Items("Potatoe", 1, 2.99, []);
 var cabbage = new Items("Cabbage", 1, 1.19, []);
 var parsnip = new Items("Parsnip", 1, 0.89, []);
@@ -14,23 +16,24 @@ var cucumber = new Items("Cucumber", 1, 0.99, []);
 var onion = new Items("Onion", 1, 1.59, []);
 var carrot = new Items("Carrot", 1, 1.09, []);
 
+// Global arrays to store total values
 var totalPriceCheck = [];
 var totalQtyCheck = [];
-var qtyIncrement = [];
 
 //  Bill total function
-function billCalc() {
-  var total = totalPriceCheck.reduce((a, b) => a + b, 0);
+function billCalcTotal() {
+  var billTotal = totalPriceCheck.reduce((a, b) => a + b, 0);
   return (document.getElementById("totalAmount").innerHTML =
-    "£" + total.toFixed(2));
+    "£" + billTotal.toFixed(2));
 }
 // Bill quantity total function
-function qtyCalc() {
-  var total = totalQtyCheck.reduce((a, b) => a + b, 0);
-  return (document.getElementById("totalQty").innerHTML = total);
+function qtyCalcTotal() {
+  var qtyTotal = totalQtyCheck.reduce((a, b) => a + b, 0);
+  return (document.getElementById("totalQty").innerHTML = qtyTotal);
 }
+// Add item functions
 function addItems(itemName, qty, price, arr) {
-  // ADD ITEMS
+  // ADD ITEM NAME
   var node = document.createElement("TR");
   var textnode = document.createTextNode(itemName);
   node.appendChild(textnode);
@@ -50,7 +53,8 @@ function addItems(itemName, qty, price, arr) {
     .setAttribute("class", itemName);
   totalQtyCheck.push(qtyConvert);
   arr.push(qtyConvert);
-  qtyCalc();
+  // Update qty total
+  qtyCalcTotal();
 
   // ADD PRICE
   var node2 = document.createElement("TR");
@@ -62,82 +66,66 @@ function addItems(itemName, qty, price, arr) {
     .appendChild(node2)
     .setAttribute("class", itemName);
   totalPriceCheck.push(numConvert);
-  billCalc();
+  // Update bill total
+  billCalcTotal();
 }
-function multiplier(objName, className) {
-  qtyIncrement = objName.arr.push(1);
+// Push values into gobal arrays and object item name array
+function pushToArray(itemName) {
+  itemName.arr.push(1);
   totalQtyCheck.push(1);
-  totalPriceCheck.push(objName.price);
-  var getQtyClass = document.getElementById("qty");
-  getQtyClass.querySelector(className).innerHTML = qtyIncrement;
-  var getPriceClass = document.getElementById("price");
-  var multiplierPrice = qtyIncrement * objName.price;
-  getPriceClass.querySelector(className).innerHTML =
-    "£" + multiplierPrice.toFixed(2);
-  qtyCalc();
-  billCalc();
+  totalPriceCheck.push(itemName.price);
+}
+// Multiplier function to add item qty and price
+function multiplier(itemName, className) {
+  // Push item to array function call
+  pushToArray(itemName);
+  // Update indivisual item qty and price
+  document.getElementById("qty").querySelector(className).innerHTML = itemName.arr.length;
+  var multiplierPrice = itemName.arr.length * itemName.price;
+  document.getElementById("price").querySelector(className).innerHTML =
+  "£" + multiplierPrice.toFixed(2);
+  // Update qty and price totals
+  qtyCalcTotal();
+  billCalcTotal();
+}
+// Condition function to check if there are any items in the list
+function checkItemName(itemName, className) {
+  if (itemName.arr.length > 0) {
+    multiplier(itemName, className);
+  } else {
+    addItems(itemName.name, itemName.qty, itemName.price, itemName.arr);
+  }
 }
 
+// Function calls for items on click
 function potatoes() {
-  if (potatoe.arr.length > 0) {
-    multiplier(potatoe, ".Potatoe");
-  } else {
-    addItems(potatoe.name, potatoe.qty, potatoe.price, potatoe.arr);
-  }
+  checkItemName(potatoe, ".Potatoe");
 }
 
 function cabbages() {
-  if (cabbage.arr.length > 0) {
-    multiplier(cabbage, ".Cabbage");
-  } else {
-    addItems(cabbage.name, cabbage.qty, cabbage.price, cabbage.arr);
-  }
+  checkItemName(cabbage, ".Cabbage");
 }
 
 function parsnips() {
-  if (parsnip.arr.length > 0) {
-    multiplier(parsnip, ".Parsnip");
-  } else {
-    addItems(parsnip.name, parsnip.qty, parsnip.price, parsnip.arr);
-  }
+  checkItemName(parsnip, ".Parsnip");
 }
 
 function tomatoes() {
-  if (tomatoe.arr.length > 0) {
-    multiplier(tomatoe, ".Tomatoe");
-  } else {
-    addItems(tomatoe.name, tomatoe.qty, tomatoe.price, tomatoe.arr);
-  }
+  checkItemName(tomatoe, ".Tomatoe");
 }
 
 function okras() {
-  if (okra.arr.length > 0) {
-    multiplier(okra, ".Okra");
-  } else {
-    addItems(okra.name, okra.qty, okra.price, okra.arr);
-  }
+  checkItemName(okra, ".Okra");
 }
 
 function cucumbers() {
-  if (cucumber.arr.length > 0) {
-    multiplier(cucumber, ".Cucumber");
-  } else {
-    addItems(cucumber.name, cucumber.qty, cucumber.price, cucumber.arr);
-  }
+  checkItemName(cucumber, ".Cucumber");
 }
 
 function onions() {
-  if (onion.arr.length > 0) {
-    multiplier(onion, ".Onion");
-  } else {
-    addItems(onion.name, onion.qty, onion.price, onion.arr);
-  }
+  checkItemName(onion, ".Onion");
 }
 
 function carrots() {
-  if (carrot.arr.length > 0) {
-    multiplier(carrot, ".Carrot");
-  } else {
-    addItems(carrot.name, carrot.qty, carrot.price, carrot.arr);
-  }
+  checkItemName(carrot, ".Carrot");
 }
